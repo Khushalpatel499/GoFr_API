@@ -21,14 +21,6 @@ const colName = "carList"
 
 var collection *mongo.Collection
 
-type cars struct {
-	model.Garage
-}
-
-func (c *cars) IsEmpty() bool {
-	return c.OwnerName == "" || c.CarNumber == "" || c.ModalName == ""
-}
-
 func init() {
 	//client option
 	clientOption := options.Client().ApplyURI(connectionString)
@@ -51,7 +43,7 @@ func init() {
 
 //insert 1 record of car
 
-func insertOneCar(car cars) {
+func insertOneCar(car model.Garage) {
 	inserted, err := collection.InsertOne(context.Background(), car)
 
 	checkNilError(err)
@@ -136,12 +128,12 @@ func InsertOneCar(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode("Please Add the car detail")
 	}
 
-	var car cars
+	var car model.Garage
 
 	_ = json.NewDecoder(r.Body).Decode(&car)
 
 	//check for empty field in json
-	if car.IsEmpty() {
+	if car.OwnerName == "" || car.CarNumber == "" || car.ModalName == "" {
 		json.NewEncoder(w).Encode("Some field are empty in json")
 		return
 	}
