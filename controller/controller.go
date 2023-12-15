@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/gorilla/mux"
 	"github.com/khushalpatel499/gofr_api/model"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -35,9 +36,7 @@ func init() {
 	// connect to MongoDB
 	client, err := mongo.Connect(context.TODO(), clientOption)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	checkNilError(err)
 
 	fmt.Println("MongoDB connection success")
 
@@ -55,9 +54,7 @@ func init() {
 func insertOneCar(car cars) {
 	inserted, err := collection.InsertOne(context.Background(), car)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	checkNilError(err)
 
 	fmt.Println("Inserted 1 car detail in Database with id:", inserted.InsertedID)
 }
@@ -67,18 +64,14 @@ func insertOneCar(car cars) {
 func updateOneCar(carId string) {
 	id, err := primitive.ObjectIDFromHex(carId)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	checkNilError(err)
 
 	filter := bson.M{"_id": id}
 	update := bson.M{"$set": bson.M{"repair": true}}
 
 	result, err := collection.UpdateOne(context.Background(), filter, update)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	checkNilError(err)
 
 	fmt.Println("Update detail count:", result.ModifiedCount)
 }
@@ -88,16 +81,12 @@ func updateOneCar(carId string) {
 func deleteOneCar(carId string) {
 	id, err := primitive.ObjectIDFromHex(carId)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	checkNilError(err)
 	filter := bson.M{"_id": id}
 
 	deleteCount, err := collection.DeleteOne(context.Background(), filter)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	checkNilError(err)
 	fmt.Println("Car detail is deleted with count:", deleteCount)
 }
 
@@ -106,9 +95,7 @@ func deleteOneCar(carId string) {
 func deleteAllCar() int64 {
 	deleteResult, err := collection.DeleteMany(context.Background(), bson.D{{}})
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	checkNilError(err)
 	fmt.Println("Number of car detail deleted:", deleteResult.DeletedCount)
 	return deleteResult.DeletedCount
 }
@@ -118,18 +105,14 @@ func deleteAllCar() int64 {
 func getAllCars() []primitive.D {
 	cur, err := collection.Find(context.Background(), bson.D{{}})
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	checkNilError(err)
 
 	var cars []primitive.D
 
 	for cur.Next(context.Background()) {
 		var car bson.D
 		err := cur.Decode(&car)
-		if err != nil {
-			log.Fatal(err)
-		}
+		checkNilError(err)
 		cars = append(cars, car)
 	}
 	defer cur.Close(context.Background())
@@ -167,17 +150,36 @@ func InsertOneCar(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func GetAllCars(w http.ResponseWriter, r *http.Request) {
+func UpdateOneCar(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/cars-detail")
-	w.Header().Set("Allow-Control-Allow-Methods", "")
+	w.Header().Set("Allow-Control-Allow-Methods", "PUT")
+
+	params := mux.Vars(r)
+	updateOneCar(params["id"])
+	json.NewEncoder(w).Encode(params["id"])
 }
 
-func GetAllCars(w http.ResponseWriter, r *http.Request) {
+func DeleteACars(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/cars-detail")
-	w.Header().Set("Allow-Control-Allow-Methods", "")
+	w.Header().Set("Allow-Control-Allow-Methods", "DELETE")
+
+	params := mux.Vars(r)
+	deleteOneCar(params["id"])
+	json.NewEncoder(w).Encode(params["id"])
 }
 
-func GetAllCars(w http.ResponseWriter, r *http.Request) {
+func DeleteAllCars(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/cars-detail")
-	w.Header().Set("Allow-Control-Allow-Methods", "")
+	w.Header().Set("Allow-Control-Allow-Methods", "DELETE")
+
+	count := deleteAllCar()
+	json.NewEncoder(w).Encode(count)
+}
+
+//check err
+
+func checkNilError(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
 }
