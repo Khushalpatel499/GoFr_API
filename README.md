@@ -32,4 +32,5 @@ Trying out API by thunder client in VsCode same as Postman:
         DELETE : delete all cars   
 
 ## DIAGRAM:
-![image](https://github.com/Khushalpatel499/GoFr_API/assets/91542765/8c619e83-ac7d-487f-9d18-a2fff7bf3aa0)
+![image](https://github.com/Khushalpatel499/GoFr_API/assets/91542765/7df75083-16fc-4b11-9133-313f074755ec)
+
