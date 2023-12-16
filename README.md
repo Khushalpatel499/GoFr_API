@@ -8,7 +8,7 @@ use Thunder for testing json query for api to add detail of car in garage.
     4.Build and run 
 
 ## API
-1.http://localhost:5000/api/cars :   
+1.localhost:5000/api/cars :   
       GET : Get all car detail   
 2./api/car:   
       POST : Enter a new car detail   
