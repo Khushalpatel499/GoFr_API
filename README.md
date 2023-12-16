@@ -12,6 +12,10 @@ use Thunder for testing json query for api to add detail of car in garage.
           go get -u github.com/gorilla/mux  
      2.work with mongo driver to add database:        
           go get go.mongodb.org/mongo-driver/mongo
+     3.Build the files:
+          go build .
+     4.Run the server:
+         go run main.go
 
        
 ## API
