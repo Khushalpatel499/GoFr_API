@@ -1,4 +1,6 @@
 # GoFr_API
+A Car Garage Management System with CRUD opertion with go language using MongoDB altas to store database and  
+use Thunder for testing json query for api to add detail of car in garage.
 # Installation
     1.Clone the repository
     2.Navigate to the directory
