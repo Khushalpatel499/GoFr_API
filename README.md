@@ -21,15 +21,15 @@ use Thunder for testing json query for api to add detail of car in garage.
 ## API
 Trying out API by thunder client in VsCode same as Postman:
      1.localhost:5000/api/cars :   
-        GET : Get all car detail   
+           GET : Get all car detail   
      2./api/car:   
-        POST : Enter a new car detail   
+           POST : Enter a new car detail   
      3./api/cars/id:   
-        PUT : Update a car detail  
+           PUT : Update a car detail  
      4./api/cars/id:   
-        DELETE: delete a car detail   
+           DELETE: delete a car detail   
      5./api/cars/deleteallcars:
-        DELETE : delete all cars   
+           DELETE : delete all cars   
 
 ## DIAGRAM:
 ![image](https://github.com/Khushalpatel499/GoFr_API/assets/91542765/7df75083-16fc-4b11-9133-313f074755ec)
