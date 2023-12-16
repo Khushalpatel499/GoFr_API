@@ -19,7 +19,7 @@ use Thunder for testing json query for api to add detail of car in garage.
 
        
 ## API
-
+Trying out API by thunder client in VsCode same as Postman:
      1.localhost:5000/api/cars :   
         GET : Get all car detail   
      2./api/car:   
