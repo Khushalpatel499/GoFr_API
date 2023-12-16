@@ -43,12 +43,26 @@ func init() {
 
 //insert 1 record of car
 
-func insertOneCar(car model.Garage) {
+/*func insertOneCar(car model.Garage) {
 	inserted, err := collection.InsertOne(context.Background(), car)
 
 	checkNilError(err)
 
 	fmt.Println("Inserted 1 car detail in Database with id:", inserted.InsertedID)
+	//return inserted.InsertedID.(string)
+}*/
+
+func insertOneCar(car model.Garage) (primitive.ObjectID, error) {
+	inserted, err := collection.InsertOne(context.Background(), car)
+	if err != nil {
+		return primitive.NilObjectID, err
+	}
+
+	// Print the inserted ID to the console
+	fmt.Println("Inserted 1 car detail in Database with id:", inserted.InsertedID)
+
+	// Return the inserted ID
+	return inserted.InsertedID.(primitive.ObjectID), nil
 }
 
 //update 1 car record
@@ -117,8 +131,48 @@ func GetAllCars(w http.ResponseWriter, r *http.Request) {
 	allCars := getAllCars()
 	json.NewEncoder(w).Encode(allCars)
 }
-
 func InsertOneCar(w http.ResponseWriter, r *http.Request) {
+	// Set response headers
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Allow-Control-Allow-Methods", "POST")
+
+	// Check if the request body is empty
+	if r.Body == nil {
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode("Please add the car detail")
+		return
+	}
+
+	// Decode JSON body into the car model
+	var car model.Garage
+	err := json.NewDecoder(r.Body).Decode(&car)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode("Error decoding JSON: " + err.Error())
+		return
+	}
+
+	// Check for empty fields in the JSON
+	if car.OwnerName == "" || car.CarNumber == "" || car.ModalName == "" {
+		json.NewEncoder(w).Encode("Some fields are empty in JSON")
+		return
+	}
+
+	// Insert the car into the database
+	insertedID, err := insertOneCar(car)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode("Error inserting car into the database: " + err.Error())
+		return
+	}
+
+	// Respond with the inserted car and its ID
+	car.ID = insertedID
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(car)
+}
+
+/*func InsertOneCar(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/cars-detail")
 	w.Header().Set("Allow-Control-Allow-Methods", "POST")
 
@@ -132,15 +186,18 @@ func InsertOneCar(w http.ResponseWriter, r *http.Request) {
 
 	_ = json.NewDecoder(r.Body).Decode(&car)
 
+	//_, _ = json.Marshal(&car)
+	//checkNilError(err)
 	//check for empty field in json
 	if car.OwnerName == "" || car.CarNumber == "" || car.ModalName == "" {
 		json.NewEncoder(w).Encode("Some field are empty in json")
 		return
 	}
 	insertOneCar(car)
+
 	json.NewEncoder(w).Encode(car)
 
-}
+}*/
 
 func UpdateOneCar(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "application/cars-detail")
