@@ -36,5 +36,5 @@ use Thunder for testing json query for api to add detail of car in garage.
    ![image](https://github.com/Khushalpatel499/GoFr_API/assets/91542765/ae42c297-8fbf-460d-9769-6f2a88525b49)
    
      2.Internal Router request in diagram:
-    ![image](https://github.com/Khushalpatel499/GoFr_API/assets/91542765/7df75083-16fc-4b11-9133-313f074755ec)
+   ![image](https://github.com/Khushalpatel499/GoFr_API/assets/91542765/7df75083-16fc-4b11-9133-313f074755ec)
 
