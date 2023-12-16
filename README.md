@@ -8,9 +8,9 @@ use Thunder for testing json query for api to add detail of car in garage.
     3.cd GoFr_API
     4.Build and run 
 # Run 
- 1.Use Gorilla mux for routing system:
+ 1.Use Gorilla mux for routing system:     
         go get -u github.com/gorilla/mux  
- 2.work with mongo driver to add database:
+ 2.work with mongo driver to add database:        
        go get go.mongodb.org/mongo-driver/mongo
        
 ## API
