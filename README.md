@@ -6,13 +6,13 @@
     4.Build and run 
 
 ## API
-localhost:5000/api/cars
+localhost:5000/api/cars : 
       GET : Get all car detail
-/api/car
+/api/car:
       POST : Enter a new car detail
-/api/cars/id
+/api/cars/id:
      PUT : Update a car detail
-/api/cars/id
+/api/cars/id:
      DELETE: delete a car detail
-/api/cars/deleteallcars
+/api/cars/deleteallcars:
      DELETE : delete all cars
