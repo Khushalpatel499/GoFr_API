@@ -31,6 +31,15 @@ use Thunder for testing json query for api to add detail of car in garage.
      5./api/cars/deleteallcars:
            DELETE : delete all cars   
 
+# Description:
+     1.Reterive List of cars:
+ ![image](https://github.com/Khushalpatel499/GoFr_API/assets/91542765/f9b0a820-3b30-44e4-9657-26534f5be9f3)
+
+     2.Add new car to garage:
+     3.Update a car:
+     4.Delete a car detail:
+     
+
 ## DIAGRAM:
      1.File Representation in diagram :
    ![image](https://github.com/Khushalpatel499/GoFr_API/assets/91542765/ae42c297-8fbf-460d-9769-6f2a88525b49)
