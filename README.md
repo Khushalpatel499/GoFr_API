@@ -36,6 +36,8 @@ use Thunder for testing json query for api to add detail of car in garage.
  ![image](https://github.com/Khushalpatel499/GoFr_API/assets/91542765/f9b0a820-3b30-44e4-9657-26534f5be9f3)
 
      2.Add new car to garage:
+  ![image](https://github.com/Khushalpatel499/GoFr_API/assets/91542765/4e4d6380-db98-41f5-b6d6-291d4c6d682a)
+
      3.Update a car:
      4.Delete a car detail:
      
